@@ -268,8 +268,7 @@ function gatePick(p){
     for(var i=0;i<items.length;i++){items[i].classList.toggle('sel',items[i].getAttribute('data-p')===p);}
     var kb=document.getElementById('gatekeybar');
     if(!kb){alert('keybar not found');return;}
-    var needsKey=true;
-    try{needsKey=!(P&&P[p]&&P[p].nokey);}catch(e){}
+    var needsKey=(p!=='polli');
     if(!needsKey){kb.hidden=true;if(typeof gateEnter==='function')gateEnter();}
     else{kb.hidden=false;var gi=document.getElementById('gatekey');if(gi)gi.focus();setTimeout(function(){kb.scrollIntoView({behavior:'smooth',block:'center'});},100);}
   } catch(err){alert('gatePick error: '+err.message);}
