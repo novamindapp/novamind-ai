@@ -82,7 +82,7 @@
 .gmtabs{position:sticky;bottom:0;z-index:30;margin-top:16px}
 
 /* Chat list gate */
-#gate{background:#0e1621;min-height:100vh;display:block !important}
+#gate{background:#0e1621;min-height:100vh}#gate[hidden]{display:none !important}#app[hidden]{display:none !important}#app:not([hidden]){display:flex;min-height:100vh;flex-direction:column}
 .tg-head{background:#17212b;padding:14px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:40}
 .tg-head .tt{font-size:19px;font-weight:700;color:#fff;flex:1}
 .tg-head .ticon{background:none;border:0;color:#7f91a4;font-size:20px;cursor:pointer;padding:6px}
