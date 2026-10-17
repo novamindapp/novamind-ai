@@ -134,7 +134,17 @@
 .gatefoot a{color:#9ca3af;text-decoration:none;margin:0 8px}
 .prow-item:active{background:rgba(124,92,255,.12) !important}
 </style></head>
-<body>
+<body><script>
+window.addEventListener('error', function(e) {
+  alert('JS Error: ' + e.message + ' at line ' + e.lineno);
+});
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest('.prow-item');
+  if (btn) {
+    alert('Clicked: ' + btn.dataset.p + ' | gatePick defined: ' + (typeof gatePick !== 'undefined'));
+  }
+}, true);
+</script>
 <section class="gate" id="gate"><header class="gatehead"><div class="gbrand"><span class="gspark">✦</span><span class="gname">NovaMind</span></div><div class="grow"></div><select id="langsel2" aria-label="Language"></select></header><div class="hero"><div class="spark">✦</div><h1>Your AI, with zero platform fees.</h1><p>Add your AI key and start writing, translating, coding, and analyzing images. Every user brings their own usage quota.</p><div class="proof"><span>No subscription</span><span>Works on mobile</span><span>BYOK</span></div></div><div class="provlist" id="gprovlist"><button type="button" class="prow-item sel" data-p="gemini" onclick="gatePick('gemini')"><img class="avatar" src="avatars/gemini.png" alt="gemini"><span class="atx"><b>Gemini</b><i>Free key</i></span><span class="kbadge">🔑 Key</span></button><button type="button" class="prow-item" data-p="openai" onclick="gatePick('openai')"><img class="avatar" src="avatars/openai.png" alt="openai"><span class="atx"><b>ChatGPT</b><i>Paid key</i></span><span class="kbadge">🔑 Key</span></button><button type="button" class="prow-item" data-p="grok" onclick="gatePick('grok')"><img class="avatar" src="avatars/grok.png" alt="grok"><span class="atx"><b>Grok</b><i>Paid key</i></span><span class="kbadge">🔑 Key</span></button><button type="button" class="prow-item" data-p="groq" onclick="gatePick('groq')"><img class="avatar" src="avatars/groq.png" alt="groq"><span class="atx"><b>Groq</b><i>Free key</i></span><span class="kbadge">🔑 Key</span></button><button type="button" class="prow-item" data-p="deepseek" onclick="gatePick('deepseek')"><img class="avatar" src="avatars/deepseek.png" alt="deepseek"><span class="atx"><b>DeepSeek</b><i>Paid key</i></span><span class="kbadge">🔑 Key</span></button><button type="button" class="prow-item" data-p="polli" onclick="gatePick('polli')"><img class="avatar" src="avatars/polli.png" alt="polli"><span class="atx"><b>Pollinations</b><i>Free, no key</i></span></button><button type="button" class="prow-item" data-p="codecraft" onclick="gatePick('codecraft')"><img class="avatar" src="avatars/codecraft.png" alt="codecraft"><span class="atx"><b>CodeCraft</b><i>Free 1M/mo</i></span><span class="kbadge">🔑 Key</span></button><button type="button" class="prow-item" data-p="astra" onclick="gatePick('astra')"><img class="avatar" src="avatars/astra.png" alt="astra"><span class="atx"><b>CometAPI</b><i>Free trial</i></span><span class="kbadge">🔑 Key</span></button></div><div class="provlist" id="gvidlist" hidden>
 <button type="button" class="prow-item" data-vid="kling"><span class="avatar" style="background:#7c3aed">🎬</span><span class="pinfo"><b>Kling</b><i>Pro video · PiAPI key</i></span><span class="kbadge">🔑 Key</span></button>
 <button type="button" class="prow-item" data-vid="veo"><span class="avatar" style="background:#1a73e8">🎥</span><span class="pinfo"><b>Gemini Veo</b><i>Veo 3.1 · Gemini key</i></span><span class="kbadge">🔑 Key</span></button>
