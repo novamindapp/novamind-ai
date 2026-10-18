@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0a0a1a">
-<meta name="google-site-verification" content="NheGi-LWKqXO0qqgyOnSrSeL_SOsAJTp58qNTEUrpjA" />
 <title>NovaMind AI</title>
 <meta name="description" content="One chat for eight AI providers. Free Pollinations chat, free images, and free voice. Your API key stays in this tab.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0a1a'/%3E%3Cpath d='M16 6.5 18.2 13H25l-5.4 4 2.1 6.5L16 19.6 10.3 23.5 12.4 17 7 13h6.8Z' fill='%237c5cff'/%3E%3C/svg%3E">
@@ -92,14 +91,14 @@ p{text-wrap:pretty}
 .row{display:flex;gap:8px;flex-wrap:wrap}
 #closemenu{display:none}
 
-.app{min-height:100svh;display:grid;grid-template-columns:260px minmax(0,1fr)}
-.sidebar{background:#0d0d1c;border-inline-end:1px solid var(--line);padding:16px;display:flex;flex-direction:column;gap:16px;height:100svh;position:sticky;top:0}
+.app{height:100svh;min-height:100svh;display:grid;grid-template-columns:260px minmax(0,1fr)}
+.sidebar{background:#0d0d1c;border-inline-end:1px solid var(--line);padding:16px;display:flex;flex-direction:column;gap:16px;height:100%;min-height:0;overflow:auto;position:sticky;top:0}
 .modes{display:flex;flex-direction:column;gap:4px}
 .mode{min-height:44px;border:0;background:transparent;color:var(--muted);border-radius:12px;display:flex;align-items:center;gap:8px;padding:0 12px;text-align:start;font-weight:600}
 .mode:hover{background:rgba(255,255,255,.05);color:var(--ink)}
 .mode.on{background:rgba(124,92,255,.18);color:#fff}
 .sidefoot{margin-top:auto;display:flex;flex-direction:column;gap:4px}
-.main{min-width:0;height:100svh;display:flex;flex-direction:column;background:radial-gradient(900px 380px at 50% -120px,rgba(124,92,255,.2),transparent 62%),var(--bg)}
+.main{min-width:0;height:100%;min-height:0;display:flex;flex-direction:column;background:radial-gradient(900px 380px at 50% -120px,rgba(124,92,255,.2),transparent 62%),var(--bg)}
 body[data-scene="image"] .main{background:radial-gradient(800px 420px at 80% -80px,rgba(0,212,255,.16),transparent 55%),linear-gradient(180deg,#0c1524,var(--bg) 42%)}
 body[data-scene="video"] .main{background:radial-gradient(700px 380px at 15% -60px,rgba(124,92,255,.22),transparent 50%),#070711}
 body[data-scene="voice"] .main{background:radial-gradient(640px 360px at 50% 0%,rgba(0,212,255,.12),transparent 60%),var(--bg)}
@@ -115,7 +114,7 @@ html[dir="rtl"] .iconbtn.back .ico{transform:scaleX(-1)}
 .voicebox label{font-weight:600;font-size:14px}
 .voicebox audio{width:100%;min-height:44px}
 #gvoicelist,#voiceStudio{display:flex;flex-direction:column;gap:8px}
-body[data-scene="voice"] .scroll{flex:0 0 auto;max-height:22vh}
+body[data-scene="voice"] .scroll{display:none}
 body[data-scene="voice"] #voiceStudio{flex:1;min-height:0;overflow:auto}
 .grow{flex:1}
 .chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;min-height:40px;padding:0 10px 0 14px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600}
@@ -171,8 +170,9 @@ html[dir="rtl"] .bubble-user{border-radius:20px 20px 20px 6px}
 .gallery{display:flex;gap:8px;overflow:auto;padding:0 0 8px}
 .gallery a{flex:none;width:112px;height:72px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#0c0c18}
 .gallery img{width:100%;height:100%;object-fit:cover}
-.compose{padding:8px 16px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 72%,transparent)}
+.compose{padding:6px 12px 0;background:transparent}
 .compose-inner{width:min(720px,100%);margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.dock{flex:none;display:flex;flex-direction:column;gap:0;margin-top:auto;background:#0a0a1a;padding-bottom:env(safe-area-inset-bottom);position:relative;z-index:6}
 .progress{height:3px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
 .progress span{display:block;height:100%;width:40%;background:linear-gradient(90deg,var(--violet),var(--cyan));animation:slide 1.1s ease-in-out infinite}
 @keyframes slide{0%{transform:translateX(-120%)}100%{transform:translateX(320%)}}
@@ -187,11 +187,6 @@ html[dir="rtl"] .bubble-user{border-radius:20px 20px 20px 6px}
 .eng{min-height:36px;border-radius:999px;border:1px solid var(--line);background:rgba(10,10,26,.55);padding:0 12px;font-size:13px;font-weight:600;color:var(--muted)}
 .eng.on{color:#fff;border-color:var(--violet);background:rgba(124,92,255,.22)}
 .note{text-align:center;color:var(--muted);font-size:12px;margin:0}
-.adslot{display:flex;justify-content:center;align-items:center;margin:14px auto;min-height:250px;max-width:340px}
-.adslot iframe{border:0}
-.gatefoot{display:flex;justify-content:center;align-items:center;gap:10px;padding:6px 12px 22px;font-size:13px;color:var(--muted)}
-.gatefoot a{color:var(--muted);text-decoration:none}
-.gatefoot a:hover{color:#fff}
 .scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:30;opacity:0;pointer-events:none}
 .scrim.on{opacity:1;pointer-events:auto}
 .dialog{position:fixed;z-index:40;left:50%;top:50%;transform:translate(-50%,-46%);width:min(480px,calc(100% - 32px));background:#141428;border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--shadow);visibility:hidden;opacity:0}
@@ -200,7 +195,9 @@ html[dir="rtl"] .bubble-user{border-radius:20px 20px 20px 6px}
 .dialog input{width:100%;min-height:48px;border-radius:12px;border:1px solid var(--line);background:#0c0c1c;padding:0 14px;margin:8px 0}
 .toast{position:fixed;z-index:50;left:50%;bottom:24px;transform:translate(-50%,12px);background:#1a1a30;border:1px solid var(--line);border-radius:12px;padding:12px 16px;opacity:0;pointer-events:none;max-width:calc(100% - 24px)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
-.mtabs{display:none}
+.mtabs{display:none;margin:0}
+body.in-app{overflow:hidden;width:100%}
+body.in-app .app{position:fixed;left:0;right:0;top:var(--app-top,0px);height:var(--app-h,100dvh);min-height:0}
 @media(max-width:860px){
   .gate{grid-template-columns:1fr}
   .brand{border-inline-end:0;border-bottom:1px solid var(--line);padding:24px 16px;gap:16px}
@@ -213,10 +210,9 @@ html[dir="rtl"] .bubble-user{border-radius:20px 20px 20px 6px}
   .sidebar.open{transform:none}
   #closemenu{display:inline-flex}
   .iconbtn{display:grid}
-  .main{height:100svh}
+  body[data-scene="voice"] #voiceStudio{padding-bottom:0}
   .starters{grid-template-columns:1fr}
-  .mtabs{display:flex}
-  .mtabs{position:sticky;bottom:0;background:rgba(10,10,26,.96);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+  .mtabs{display:flex;position:static;bottom:auto;background:#0a0a1a;border-top:1px solid var(--line);padding:0 4px;gap:0}
   .tab{font-size:12px;gap:4px}
   .plate{width:92px;height:56px}
   .plate svg.logo{width:80px;height:28px}
@@ -229,7 +225,12 @@ html[dir="rtl"] .bubble-user{border-radius:20px 20px 20px 6px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
+.adslot{margin:14px auto;max-width:100%;text-align:center;min-height:250px}
+.gatefoot{display:flex;justify-content:center;align-items:center;gap:10px;padding:6px 12px 22px;font-size:13px;color:var(--muted)}
+.gatefoot a{color:var(--muted);text-decoration:none}
+.gatefoot a:hover{color:#fff}
 </style>
+<meta name="google-site-verification" content="NheGi-LWKqXO0qqgyOnSrSeL_SOsAJTp58qNTEUrpjA">
 </head>
 <body data-scene="chat">
 <section class="gate" id="gate">
@@ -258,21 +259,6 @@ html[dir="rtl"] .bubble-user{border-radius:20px 20px 20px 6px}
     <div class="cards" id="gphotolist" hidden></div>
     <div class="cards" id="gvidlist" hidden></div>
     <div id="gvoicelist" hidden>
-      <div class="voicebox">
-        <textarea id="gvtext" maxlength="500" data-i18n-ph="voice_ph" placeholder="Type what to say — up to 500 characters"></textarea>
-        <span class="vcount" id="gvcount">0 / 500</span>
-        <select id="gvvoice" aria-label="Voice">
-          <option value="Brian">Brian</option><option value="Amy">Amy</option><option value="Emma">Emma</option><option value="Joanna">Joanna</option><option value="Matthew">Matthew</option><option value="Joey">Joey</option><option value="Nicole">Nicole</option><option value="Salli">Salli</option>
-        </select>
-        <div class="row">
-          <button class="btn primary" id="gvgen" type="button"><svg class="ico" viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/></svg><span data-i18n="speak">Speak</span></button>
-          <button class="btn ghost" id="gvplay" type="button" data-i18n="voice_device">Play on this device</button>
-        </div>
-        <p class="err" id="gverr" hidden></p>
-        <audio id="gvaudio" controls hidden></audio>
-        <a class="btn ghost" id="gvdl" download="novamind-voice.mp3" hidden data-i18n="download_audio">Download audio</a>
-        <p class="section-note" data-i18n="voice_note">Free voice uses the StreamElements speech API. If it is busy, Play on this device uses your phone's own voice, including Arabic.</p>
-      </div>
       <button class="card" id="elcard" type="button" aria-expanded="false" aria-controls="elpanel">
         <span class="plate dark"><span class="wm">EL</span></span>
         <span class="meta"><b data-i18n="el_name">ElevenLabs AI Voice</b><small data-i18n="el_desc">Your free key · 10,000 characters a month</small></span>
@@ -298,6 +284,21 @@ html[dir="rtl"] .bubble-user{border-radius:20px 20px 20px 6px}
         <p class="err" id="elerr" hidden aria-live="polite"></p>
         <audio id="elaudio" controls hidden></audio>
       </div>
+      <div class="voicebox">
+        <textarea id="gvtext" maxlength="500" data-i18n-ph="voice_ph" placeholder="Type what to say — up to 500 characters"></textarea>
+        <span class="vcount" id="gvcount">0 / 500</span>
+        <select id="gvvoice" aria-label="Voice">
+          <option value="Brian">Brian</option><option value="Amy">Amy</option><option value="Emma">Emma</option><option value="Joanna">Joanna</option><option value="Matthew">Matthew</option><option value="Joey">Joey</option><option value="Nicole">Nicole</option><option value="Salli">Salli</option>
+        </select>
+        <div class="row">
+          <button class="btn primary" id="gvgen" type="button"><svg class="ico" viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/></svg><span data-i18n="speak">Speak</span></button>
+          <button class="btn ghost" id="gvplay" type="button" data-i18n="voice_device">Play on this device</button>
+        </div>
+        <p class="err" id="gverr" hidden></p>
+        <audio id="gvaudio" controls hidden></audio>
+        <a class="btn ghost" id="gvdl" download="novamind-voice.mp3" hidden data-i18n="download_audio">Download audio</a>
+        <p class="section-note" data-i18n="voice_note">Free voice uses the StreamElements speech API. If it is busy, Play on this device uses your phone's own voice, including Arabic.</p>
+      </div>
     </div>
     <div class="keybar" id="gatekeybar" hidden>
       <label for="gatekey" id="keylabel">API key for this provider</label>
@@ -319,12 +320,22 @@ html[dir="rtl"] .bubble-user{border-radius:20px 20px 20px 6px}
         <a class="btn ghost" id="keylink" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener" data-i18n="open_key_page">Open key page</a>
       </details>
     </div>
-<div class="adslot" id="adslot-gate"><script>   atOptions = {     'key' : 'd42c14365549f87b714f9e317f65105b',     'format' : 'iframe',     'height' : 250,     'width' : 300,     'params' : {}   }; </script> <script src="https://bauval.org/22/d42c14365549f87b714f9e317f65105b"></script></div>
+<div class="adslot" id="adslot-gate"><script>
+    atOptions = {
+    'key' : 'd42c14365549f87b714f9e317f65105b',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+</script>
+<script src="https://bauval.org/22/d42c14365549f87b714f9e317f65105b"></script></div>
 <div class="gatefoot"><a href="privacy.html">Privacy</a><span>·</span><a href="terms.html">Terms</a><span>·</span><a href="free-claude-opus-5.html">Free AI Guides</a></div>
   </div>
 </section>
 
 <div class="app" id="app" hidden>
+  <div class="scrim" id="scrim"></div>
   <aside class="sidebar" id="sidebar">
     <div class="mark"><span class="spark" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24"><path d="m12 3 1.8 5.4L19 10l-5.2 1.6L12 17l-1.8-5.4L5 10l5.2-1.6Z"/></svg></span><b>NovaMind</b><span class="grow"></span><button class="btn ghost" id="closemenu" type="button" aria-label="Close" style="min-width:44px;padding:0"><svg class="ico" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
     <button class="btn primary block" id="newchat" type="button"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span data-i18n="new_chat">New chat</span></button>
@@ -410,6 +421,17 @@ html[dir="rtl"] .bubble-user{border-radius:20px 20px 20px 6px}
         <audio id="avelaudio" controls hidden></audio>
       </div>
     </div>
+    <div class="dock" id="dock">
+<div class="adslot" id="adslot"><script>
+    atOptions = {
+    'key' : 'd42c14365549f87b714f9e317f65105b',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+</script>
+<script src="https://bauval.org/22/d42c14365549f87b714f9e317f65105b"></script></div>
     <div class="compose" id="compose">
       <div class="compose-inner">
         <div class="gallery" id="gallery" hidden></div>
@@ -429,22 +451,12 @@ html[dir="rtl"] .bubble-user{border-radius:20px 20px 20px 6px}
           <span id="filename"></span>
           <button class="btn ghost" id="remove" type="button" aria-label="Remove" style="min-width:44px;padding:0"><svg class="ico" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
         </div>
+        <p class="note" data-i18n="note">This session only. The model can be wrong.</p>
         <div class="composer">
           <button class="btn ghost" id="attach" type="button" aria-label="Attach" style="min-width:44px;padding:0"><svg class="ico" viewBox="0 0 24 24"><path d="m8 12 6.5-6.5a3 3 0 0 1 4.2 4.2L10 18.4a4 4 0 0 1-5.6-5.6L12.8 4.4"/></svg></button>
           <textarea id="prompt" rows="1" data-i18n-ph="composer_ph" placeholder="Message…"></textarea>
           <button class="btn primary" id="send" type="button"><svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span id="sendlabel" data-i18n="send">Send</span></button>
         </div>
-        <p class="note" data-i18n="note">This session only. The model can be wrong.</p>
-<div class="adslot" id="adslot"><script>
-    atOptions = {
-    'key' : 'd42c14365549f87b714f9e317f65105b',
-    'format' : 'iframe',
-    'height' : 250,
-    'width' : 300,
-    'params' : {}
-  };
-</script>
-<script src="https://bauval.org/22/d42c14365549f87b714f9e317f65105b"></script></div>
       </div>
     </div>
     <nav class="mtabs" id="mtabs">
@@ -453,10 +465,10 @@ html[dir="rtl"] .bubble-user{border-radius:20px 20px 20px 6px}
       <button class="tab" type="button" data-m="video"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="6" width="12" height="12" rx="2"/><path d="m15 10 6-3v10l-6-3"/></svg><span data-i18n="tab_video">Video</span></button>
       <button class="tab" type="button" data-m="voice"><svg class="ico" viewBox="0 0 24 24"><path d="M12 4a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V7a3 3 0 0 0-3-3Z"/><path d="M6 11a6 6 0 0 0 12 0M12 17v3"/></svg><span data-i18n="tab_voice">Voice</span></button>
     </nav>
+    </div>
   </div>
 </div>
 
-<div class="scrim" id="scrim"></div>
 <section class="dialog" id="dialog" role="dialog" aria-modal="true" hidden>
   <h3 data-i18n="dlg_h">Change API key</h3>
   <p id="dlgp" data-i18n="dlg_p">Replaces the key for this tab only. It is not saved.</p>
@@ -614,6 +626,7 @@ function enterApp(){
   $("gatekey").value="";
   $("gate").hidden=true;
   $("app").hidden=false;
+  fitFrame();
   var requested=S.gatemode==="photo"?"image":(S.gatemode==="voice"||S.gatemode==="image"||S.gatemode==="video"?S.gatemode:"chat");
   var mode=requested;
   if(S.returning&&sceneKey(S.mode)===sceneKey(requested))mode=S.mode;
@@ -637,7 +650,7 @@ function updChrome(){
   $("videng").hidden=S.mode!=="video";
   var voice=S.mode==="voice";
   $("voiceStudio").hidden=!voice;
-  $("compose").hidden=voice;
+  $("compose").hidden=false;
   var scene=sceneOf();
   document.body.dataset.scene=scene;
   var h=$("welcome").querySelector("h2"), para=$("welcome").querySelector("p");
@@ -875,6 +888,12 @@ async function genVideo(p){
 async function send(){
   var text=$("prompt").value.trim();
   if((!text&&!S.image&&!S.pdf)||S.busy)return;
+  if(S.mode==="voice"){
+    if(!text)return;
+    $("prompt").value="";grow();
+    speak(text,$("avvoice").value,$("avaudio"),$("averr"),$("avdl"));
+    return;
+  }
   if(S.mode==="image"&&text){$("prompt").value="";grow();genImage(text);return}
   if(S.mode==="video"&&text){
     $("prompt").value="";grow();
@@ -1012,6 +1031,7 @@ function backToGate(){
   var models=$("models");if(models)models.hidden=true;
   $("app").hidden=true;
   $("gate").hidden=false;
+  fitFrame();
   var w=S.mode==="image"?"photo":S.mode==="video"?"video":S.mode==="voice"?"voice":"chat";
   showList(w);
   window.scrollTo(0,0);
@@ -1051,6 +1071,7 @@ $("provsel").onclick=function(e){e.stopPropagation();var m=$("models");if(m.hidd
 document.addEventListener("click",function(e){var m=$("models");if(!m||m.hidden)return;if(e.target.closest("#models")||e.target.closest("#provsel"))return;m.hidden=true});
 document.querySelectorAll(".starter").forEach(function(b){b.onclick=function(){$("prompt").value=b.dataset.prompt||"";grow();$("prompt").focus()}});
 $("prompt").oninput=grow;
+$("prompt").addEventListener("focus",function(){requestAnimationFrame(fitFrame)});
 $("prompt").onkeydown=function(e){if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();send()}};
 $("send").onclick=send;
 $("attach").onclick=function(){$("file").click()};
@@ -1210,6 +1231,23 @@ wireEleven("avel");
 bindElCard("el");
 bindElCard("avel");
 bindCount("gvtext","gvcount");bindCount("avtext","avcount");
+function fitFrame(){
+  var app=$("app");
+  if(!app||app.hidden){document.body.classList.remove("in-app");return}
+  document.body.classList.add("in-app");
+  var vv=window.visualViewport;
+  var top=vv?vv.offsetTop:0;
+  var h=vv?vv.height:window.innerHeight;
+  document.documentElement.style.setProperty("--app-top",Math.round(top)+"px");
+  document.documentElement.style.setProperty("--app-h",Math.round(h)+"px");
+  if(window.scrollX||window.scrollY)window.scrollTo(0,0);
+}
+if(window.visualViewport){
+  visualViewport.addEventListener("resize",fitFrame);
+  visualViewport.addEventListener("scroll",fitFrame);
+}
+window.addEventListener("resize",fitFrame);
+window.addEventListener("orientationchange",fitFrame);
 renderLists();applyLang();showList("chat");
 </script>
 </body>
