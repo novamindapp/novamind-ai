@@ -1071,7 +1071,8 @@ $("provsel").onclick=function(e){e.stopPropagation();var m=$("models");if(m.hidd
 document.addEventListener("click",function(e){var m=$("models");if(!m||m.hidden)return;if(e.target.closest("#models")||e.target.closest("#provsel"))return;m.hidden=true});
 document.querySelectorAll(".starter").forEach(function(b){b.onclick=function(){$("prompt").value=b.dataset.prompt||"";grow();$("prompt").focus()}});
 $("prompt").oninput=grow;
-$("prompt").addEventListener("focus",function(){requestAnimationFrame(fitFrame)});
+$("prompt").addEventListener("focus",function(){requestAnimationFrame(fitFrame);setTimeout(fitFrame,350);setTimeout(fitFrame,800)});
+["gvtext","avtext"].forEach(function(id){var t=$(id);if(t)t.addEventListener("focus",function(){requestAnimationFrame(fitFrame);setTimeout(fitFrame,350);setTimeout(fitFrame,800)})});
 $("prompt").onkeydown=function(e){if(e.key==="Enter"&&!e.shiftKey&&!e.isComposing){e.preventDefault();send()}};
 $("send").onclick=send;
 $("attach").onclick=function(){$("file").click()};
