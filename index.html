@@ -230,6 +230,9 @@ body.kb .note{display:none}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 .adslot{margin:14px auto;max-width:100%;text-align:center;min-height:250px}
+#wallpaper{position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;background:linear-gradient(160deg,#2b1055 0%,#7597de 100%);background-size:cover;background-position:center;opacity:.35;transition:opacity 1.2s ease;pointer-events:none}
+#wallpaper::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,92,255,.3),rgba(255,120,50,.15),rgba(0,0,0,.5))}
+.app,.gate{position:relative;z-index:1}
 .gatefoot{display:flex;justify-content:center;align-items:center;gap:10px;padding:6px 12px 22px;font-size:13px;color:var(--muted)}
 .gatefoot a{color:var(--muted);text-decoration:none}
 .gatefoot a:hover{color:#fff}
@@ -1249,11 +1252,6 @@ renderLists();applyLang();showList("chat");
 <script src="https://bauval.org/22/d42c14365549f87b714f9e317f65105b"></script></div>
 </div>
 
-<style>
-#wallpaper{position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;background-size:cover;background-position:center;opacity:.22;transition:opacity 1.2s ease;pointer-events:none}
-#wallpaper::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,92,255,.35),rgba(255,120,50,.18),rgba(0,0,0,.45))}
-.app,.gate{position:relative;z-index:1}
-</style>
 <div id="wallpaper"></div>
 
 <script>
@@ -1265,7 +1263,7 @@ function set(){wp.style.backgroundImage="url(https://picsum.photos/seed/"+W[i]+"
 set();
 setInterval(function(){
   var n=(i+1)%W.length;var im=new Image();
-  im.onload=function(){wp.style.opacity=0;setTimeout(function(){i=n;set();wp.style.opacity=.22},600)};
+  im.onload=function(){wp.style.opacity=0;setTimeout(function(){i=n;set();wp.style.opacity=.35},600)};
   im.onerror=function(){i=n};im.src="https://picsum.photos/seed/"+W[n]+"/800/1200";
 },30000);
 })();
