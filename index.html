@@ -135,8 +135,7 @@ body[data-scene="voice"] #voiceStudio{flex:1;min-height:0;overflow:auto}
 .scroll{flex:1 1 auto;min-height:0;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 body[data-scene="image"] .scroll{background-image:radial-gradient(rgba(0,212,255,.22) 1px,transparent 1px);background-size:22px 22px}
 body[data-scene="video"] .scroll{background-image:repeating-linear-gradient(90deg,transparent,transparent 72px,rgba(255,255,255,.035) 72px,rgba(255,255,255,.035) 73px)}
-.thread{width:min(720px,100%);margin:0 auto;padding:12px 16px 8px;min-height:100%;display:flex;flex-direction:column;justify-content:flex-start}
-#welcome{margin-top:auto}
+.thread{width:min(720px,100%);margin:0 auto;padding:12px 16px 8px}
 .welcome{margin:0;padding:4px 0 8px;display:flex;flex-direction:column;gap:12px;flex:none}
 .welcome h2{font-size:clamp(28px,6.4vw,42px);line-height:1.25}
 .welcome p{color:var(--muted);margin:0;max-width:46ch}
@@ -234,6 +233,9 @@ body.kb .note{display:none}
 .gatefoot{display:flex;justify-content:center;align-items:center;gap:10px;padding:6px 12px 22px;font-size:13px;color:var(--muted)}
 .gatefoot a{color:var(--muted);text-decoration:none}
 .gatefoot a:hover{color:#fff}
+#appad{display:none}
+body.has-appad #appad{display:block}
+body.has-appad .dock{margin-bottom:40px}
 </style>
 <meta name="google-site-verification" content="NheGi-LWKqXO0qqgyOnSrSeL_SOsAJTp58qNTEUrpjA">
 </head>
@@ -400,16 +402,6 @@ body.kb .note{display:none}
       </div>
     </div>
     <div class="dock" id="dock">
-<div class="adslot" id="adslot"><script>
-    atOptions = {
-    'key' : 'd42c14365549f87b714f9e317f65105b',
-    'format' : 'iframe',
-    'height' : 250,
-    'width' : 300,
-    'params' : {}
-  };
-</script>
-<script src="https://bauval.org/22/d42c14365549f87b714f9e317f65105b"></script></div>
     <div class="compose" id="compose">
       <div class="compose-inner">
         <div class="gallery" id="gallery" hidden></div>
@@ -602,7 +594,7 @@ function sceneKey(mode){return mode==="image"?"image":mode==="video"?"video":mod
 function enterApp(){
   $("gateerr2").hidden=true;
   $("gatekey").value="";
-  $("gate").hidden=true;
+  $("gate").hidden=true;document.body.classList.add("has-appad");
   $("app").hidden=false;
   fitFrame();
   var requested=S.gatemode==="photo"?"image":(S.gatemode==="voice"||S.gatemode==="image"||S.gatemode==="video"?S.gatemode:"chat");
@@ -709,7 +701,7 @@ function videoPick(which){
   setprov("polli");
   armKey({name:"NovAI",hint:"novai",href:"https://aiapi-pro.com",ph:"nv-…"},submitNova);
 }
-function openApp(){$("gate").hidden=true;$("app").hidden=false}
+function openApp(){$("gate").hidden=true;document.body.classList.add("has-appad");$("app").hidden=false}
 function md(txt){
   var c=String(txt).split(/```/),o="";
   for(var i=0;i<c.length;i++){
@@ -720,6 +712,7 @@ function md(txt){
   return o;
 }
 function bottom(){requestAnimationFrame(function(){pinThread(true)})}
+
 function pinThread(force){
   var sc=$("scroll");if(!sc)return;
   var welcome=$("welcome");
@@ -997,7 +990,7 @@ function backToGate(){
   closemenu();
   var models=$("models");if(models)models.hidden=true;
   $("app").hidden=true;
-  $("gate").hidden=false;
+  $("gate").hidden=false;document.body.classList.remove("has-appad");
   fitFrame();
   var w=S.mode==="image"?"photo":S.mode==="video"?"video":S.mode==="voice"?"voice":"chat";
   showList(w);
@@ -1241,5 +1234,19 @@ window.addEventListener("resize",fitFrame);
 window.addEventListener("orientationchange",fitFrame);
 renderLists();applyLang();showList("chat");
 </script>
+
+<div id="appad" style="position:fixed;bottom:0;left:0;right:0;z-index:60;background:#0a0a12;text-align:center;padding:2px 0;border-top:1px solid #1e1e2e">
+<div style="font-size:10px;color:#555;letter-spacing:1px">ADVERTISEMENT</div>
+<div class="adslot" id="adslot" style="min-height:0;margin:0"><script>
+    atOptions = {
+    'key' : 'd42c14365549f87b714f9e317f65105b',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+</script>
+<script src="https://bauval.org/22/d42c14365549f87b714f9e317f65105b"></script></div>
+</div>
 </body>
 </html>
