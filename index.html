@@ -938,6 +938,20 @@ async function send(){
       if(!res.ok)throw{status:res.status,data:data};
       var ch=data.choices&&data.choices[0];
       result=ch&&ch.message&&ch.message.content?String(ch.message.content).trim():"";
+      var fr=ch?ch.finish_reason:"",cont=0,wait2=null;
+      while(fr==="length"&&result&&cont<5){
+        cont++;if(!wait2)wait2=typing();
+        var m2=msgs.concat([{role:"assistant",content:result},{role:"user",content:CONTP}]),r2;
+        try{r2=await fetch(P[S.provider].url,{method:"POST",headers:hdrs,body:JSON.stringify({model:P[S.provider].model,messages:m2,temperature:0.7,max_tokens:(P[S.provider].maxout||8192)}),signal:S.controller.signal})}catch(e2){if(e2.name==="AbortError")throw e2;break}
+        if(!r2.ok)break;
+        var d2=await r2.json().catch(function(){return{}});
+        var c2=d2.choices&&d2.choices[0];
+        var p2=c2&&c2.message&&c2.message.content?String(c2.message.content).replace(/\s+$/,""):"";
+        if(!p2)break;
+        result+=seamJoin(result,p2);
+        fr=c2?c2.finish_reason:"";
+      }
+      if(wait2)wait2.remove();
     }else{
       var contents=[];
       S.history.forEach(function(m){
@@ -953,6 +967,20 @@ async function send(){
       if(!res.ok)throw{status:res.status,data:data};
       var cand=data.candidates&&data.candidates[0];
       result=cand&&cand.content&&cand.content.parts?cand.content.parts.map(function(p){return p.text||""}).join("").trim():"";
+      var frn=cand?cand.finishReason:"",contn=0,wait3=null;
+      while(frn==="MAX_TOKENS"&&result&&contn<5){
+        contn++;if(!wait3)wait3=typing();
+        var ctn=contents.concat([{role:"model",parts:[{text:result}]},{role:"user",parts:[{text:CONTP}]}]),r3;
+        try{r3=await fetch(P.gemini.url,{method:"POST",headers:{"Content-Type":"application/json","x-goog-api-key":S.key},body:JSON.stringify({system_instruction:{parts:[{text:M[S.mode].sys||M.chat.sys}]},contents:ctn,generationConfig:{temperature:0.7,maxOutputTokens:8192}}),signal:S.controller.signal})}catch(e3){if(e3.name==="AbortError")throw e3;break}
+        if(!r3.ok)break;
+        var d3=await r3.json().catch(function(){return{}});
+        var cd3=d3.candidates&&d3.candidates[0];
+        var p3=cd3&&cd3.content&&cd3.content.parts?cd3.content.parts.map(function(p){return p.text||""}).join("").replace(/\s+$/,""):"";
+        if(!p3)break;
+        result+=seamJoin(result,p3);
+        frn=cd3?cd3.finishReason:"";
+      }
+      if(wait3)wait3.remove();
     }
     if(!result)throw{status:0,data:{}};
     S.history.push({role:"assistant",text:result});
@@ -964,6 +992,8 @@ async function send(){
   }
   busy(false);S.controller=null;$("prompt").focus();
 }
+var CONTP="Continue exactly where the previous answer stopped. Output only the continuation: no explanations, no repetition, do not restart or re-open code blocks.";
+function seamJoin(a,b){var infence=((a.match(/```/g)||[]).length%2)===1;if(infence)b=b.replace(/^```[a-zA-Z0-9]*\n?/,"");return b}
 function grow(){var p=$("prompt");p.style.height="auto";p.style.height=Math.min(p.scrollHeight,160)+"px"}
 function clearimg(){S.image=null;S.pdf=null;S.file=null;S.video=null;$("file").value="";$("attachment").hidden=true}
 function readFile(file){return new Promise(function(ok,no){var r=new FileReader();r.onload=function(){var x=String(r.result),i=x.indexOf(",");ok({name:file.name,mime:file.type,data:x.slice(i+1),src:x})};r.onerror=no;r.readAsDataURL(file)})}
